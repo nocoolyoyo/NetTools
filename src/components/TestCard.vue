@@ -24,8 +24,8 @@
         </h3>
       </div>
       <el-button :type="CButtonType"
-                 :loading="CButtonDiasable"
-                 :disabled="CButtonDiasable"
+                 :loading="CButtonDisable"
+                 :disabled="CButtonDisable"
                  @click="start" round>{{CButtonText}}</el-button>
     </div>
   </el-card>
@@ -183,7 +183,7 @@
         return '未知'
       },
       CMaxSpeed () {
-        return this.downloadMaxSpeed
+          return this.downloadMaxSpeed
           ? getBitSpeed(this.downloadMaxSpeed, this.interval)
           : '未知'
       },
@@ -193,12 +193,12 @@
           : '未知'
       },
       CArvSpeed () {
-        return  this.downloadSpeedArr.length > 0
+        return this.downloadSpeedArr.length > 0
           ? getBitSpeed(getArv(this.downloadSpeedArr), this.interval)
           : '未知'
       },
       CArvPing () {
-        return  this.pingArr.length > 0
+        return this.pingArr.length > 0
           ? getArv(this.pingArr).toFixed(2) + 'ms'
           : '未知'
       },
