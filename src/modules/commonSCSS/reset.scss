@@ -7,8 +7,6 @@ html,body,div,strong,b,span,i,p,h1,h2,h3,h4,h5,h6,em,ol,ul,li,dl,dt,dd,article, 
             outline: 0;
             font-style: normal;
             font-size:100%;
-            line-height:1;
-
             box-sizing:border-box;
             -webkit-text-size-adjust: none;
             -webkit-tap-highlight-color: rgba(0,0,0,0);
@@ -32,4 +30,31 @@ a:hover{
 }
 ul, li{
     list-style: none;
+}
+.float-r {
+  float: right;
+}
+.float-l {
+  float: left;
+}
+.mr-lg {
+  margin-right: 20px !important;
+}
+.mr-md {
+  margin-right: 10px !important;
+}
+.mr-sm {
+  margin-right: 5px !important;
+}
+.ml-lg {
+  margin-left: 20px !important;
+}
+.ml-md {
+  margin-left: 10px !important;
+}
+.ml-sm {
+  margin-left: 5px !important;
+}
+.mb-0 {
+  margin-bottom: 0 !important;
 }

@@ -2,10 +2,15 @@
   <el-card class="test-card">
     <div slot="header" class="clearfix">
       <span>{{title}}</span>
-      <el-button style="float: right; padding: 3px 0" type="text">设置</el-button>
+      <el-button @click="update" style="float: right; padding: 3px 0" type="text">编辑</el-button>
     </div>
     <div class="card-body">
-      <el-progress type="circle" :width="90" :percentage="CProgress"></el-progress>
+      <div class="download-module" v-if="moduleMap.download">
+        <el-progress type="circle" :width="90" :percentage="CProgress"></el-progress>
+      </div>
+      <div class="ping-module" v-if="moduleMap.ping">
+          ping值：{{CArvPing}}
+      </div>
       <div class="info-panel">
         <h3>
           文件总大小：{{CFileSize}}
@@ -33,6 +38,7 @@
 
 <script>
   import Chart from 'chart.js'
+  import EventBus from "@/utils/eventBus"
 
   //url混淆
   function hashUrl(url) {
@@ -104,10 +110,14 @@
   export default {
     name: 'TestCard',
     props: {
-      // 检测类型 + 其他验证
-      url: {
-        type: String,
+      //组件所在的下标
+      index: {
+        type: Number,
         required: true,
+      },
+      moduleMap: {
+        type: Object,
+        require:true,
       },
       //采样时间间隔，单位接受s,ms最小不超过100
       interval: {
@@ -123,10 +133,6 @@
         type: String,
         required: false,
         default: '',
-      },
-      pingUrl:{
-        type: String,
-        required: true,
       },
       title: {
         type: String,
@@ -168,7 +174,6 @@
     },
     mounted (){
       //this.data
-
     },
     computed: {
       CProgress () {
@@ -230,7 +235,7 @@
         let lastSpeed = 0
         let timer = null
 
-          xhr.open("GET", hashUrl(this.url), true)
+          xhr.open("GET", hashUrl(this.moduleMap.download.url), true)
           xhr.responseType = "text"
 
           let handle = (e) => {
@@ -279,12 +284,12 @@
           };
           xhr.send(null);
       },
-      testPing (){
+      testPing() {
         let xhr = XHRObject();
         let startTime = 0
         let endTime = 0
 
-        xhr.open("GET", hashUrl(this.pingUrl), true)
+        xhr.open("GET", hashUrl(this.moduleMap.ping.url), true)
         xhr.responseType = "text";
 
         xhr.onloadstart = function(e) {
@@ -294,14 +299,15 @@
         xhr.onreadystatechange = (e)=> {
           if(xhr.readyState === 2){
             endTime = e.timeStamp;
-            console.log(endTime - startTime)
             this.pingArr.push(endTime - startTime);
           }
         }
         xhr.send(null);
       },
-
-      start (){
+      update() {
+        EventBus.emit('updateTest', this.index)
+      },
+      start(){
         this.ButtonDisable = true;
         this.testDownload();
       }

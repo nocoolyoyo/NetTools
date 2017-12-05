@@ -2,7 +2,11 @@
   <el-container id="app">
     <el-header>
       <div class="logo h1">Http Tools</div>
-      <el-button type="primary">新建测试</el-button>
+      <div>
+        <el-button type="success">当前项目</el-button>
+        <el-button type="primary">新建项目</el-button>
+      </div>
+
     </el-header>
     <el-container>
       <!--<el-aside width="200px">-->
@@ -40,9 +44,9 @@
         <!--</el-menu>-->
       <!--</el-aside>-->
       <!--<el-container>-->
-        <el-main>
-          <router-view/>
-        </el-main>
+      <el-main>
+        <dashboard/>
+      </el-main>
       <!--</el-container>-->
     </el-container>
   </el-container>
@@ -50,11 +54,11 @@
 
 <script>
 
-export default {
-  name: 'app',
-  methods: {
+import Dashboard from "@/components/Dashboard.vue";
 
-  }
+export default {
+  components: { Dashboard },
+  name: 'app'
 }
 </script>
 
@@ -65,12 +69,37 @@ export default {
     overflow: hidden;
     height: 100%;
   }
+  .hr {
+    background-color: $c-milka;
+    height:1px;
+    width: 100%;
+    display: block;
+    margin: 0.5em 0;
+  }
+  .panel {
+    border: 1px solid  $c-milka;
+    border-radius:.4em;
+    box-sizing: border-box;
+    margin: 10px 0;
+    .panel-title {
+      width: 100%;
+      border-radius:.4em .4em 0 0;
+      background-color: lighten($c-milka,10%);
+      padding:10px;
+      font-size: 16px;
+      font-weight: 500;
+      border-bottom: 1px solid  $c-milka;
+    }
+    .panel-body {
+      padding:10px;
+    }
+  }
   #app {
   overflow: hidden;
   height: 100%;
     .el-header {
       z-index: 1;
-      background-color: $c-milka;
+
       box-shadow: $box-shadow-main;
       display: flex;
       align-items: center;
