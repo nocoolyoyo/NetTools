@@ -4,7 +4,20 @@
 * created by nocoolyoyo on 2017/10/16
 *
 * */
-
+/*
+   *  封装LocalStorage存取服务
+   */
+export const  Storage= {
+    set: function(key,value) {
+        localStorage.setItem(key,value);
+    },
+    get: function (key) {
+      return localStorage.getItem(key);
+    },
+    del: function (key) {
+      localStorage.removeItem(key)
+    }
+}
 
 // 判断参数是否是其中之一
 export function oneOf (value, validList) {

@@ -31,7 +31,7 @@
       <el-button :type="CButtonType"
                  :loading="CButtonDisable"
                  :disabled="CButtonDisable"
-                 @click="start" round>{{CButtonText}}</el-button>
+                 @click="action" round>{{CButtonText}}</el-button>
     </div>
   </el-card>
 </template>
@@ -90,21 +90,7 @@
       return str.toFixed(2) + unit;
   }
 
-  // ajax post请求：
-  function ajaxPost (url ,data) {
-    let ajax = ajaxObject();
-      ajax.open( "post" , url , true );
-      ajax.setRequestHeader( "Content-Type" , "application/x-www-form-urlencoded" );
-      ajax.onreadystatechange = function () {
-        if( ajax.readyState === 4 ) {
-          if( ajax.status === 200 )
-            console.log("report success!");
-          else
-            console.log("http error:"+ajax.status);
-        }
-      }
-      ajax.send(data);
-  }
+
 
 
   export default {
@@ -170,6 +156,7 @@
 
         ButtonStatus: "start",  //start, ing, restart
         ButtonDisable: false,  //loading,
+        xhr: null   //当前的xhr传输对象
       }
     },
     mounted (){
@@ -230,7 +217,15 @@
     },
     methods: {
       testDownload () {
-        let xhr = new XHRObject();
+        if(this.ButtonStatus === 'ing') {
+          this.xhr.abort()
+          this.ButtonDisable = false
+          this.ButtonStatus = 'restart'
+          return
+        }
+
+        this.xhr = new XHRObject();
+        let xhr =  this.xhr
         let lastLoaded = 0;
         let lastSpeed = 0
         let timer = null
@@ -307,7 +302,7 @@
       update() {
         EventBus.emit('updateTest', this.index)
       },
-      start(){
+      action(){
         this.ButtonDisable = true;
         this.testDownload();
       }

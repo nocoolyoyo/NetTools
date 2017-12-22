@@ -3,8 +3,9 @@
     <el-header>
       <div class="logo h1">Http Tools</div>
       <div>
-        <el-button type="success">当前项目</el-button>
-        <el-button type="primary">新建项目</el-button>
+        <el-button type="default">设置项目</el-button>
+        <el-button type="success">导出项目</el-button>
+        <el-button type="primary">导入项目</el-button>
       </div>
 
     </el-header>
